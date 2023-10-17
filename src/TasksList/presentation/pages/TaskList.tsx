@@ -16,7 +16,7 @@ interface TasksListProps {
 
 
 const TasksList: FunctionComponent<TasksListProps> = () => {
-    const {handleClickOpen,handleClose,taskList,open} = useTaskListHook();    
+    const {handleClickOpen,handleClose,taskList,open,errorText} = useTaskListHook();    
 
     const displayedTasks = taskList.map((task, index) => {
         return <Grid item xs={12} md={(index === taskList.length - 1) && (index % 2 === 0) ? 12 : 6} key={task.getId()}>
@@ -25,7 +25,7 @@ const TasksList: FunctionComponent<TasksListProps> = () => {
     })
 
     return (<Fragment>
-        {taskList.length==0?<Typography>There is no Tasks Added yet</Typography>:
+        {taskList.length==0?<Typography>{errorText}</Typography>:
             
             <Grid container spacing={2}>
             {displayedTasks}

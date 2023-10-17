@@ -20,6 +20,10 @@ export const useTaskListHook=()=>{
         [],
       );
 
+    let errorText ;
+    if(taskList.length !==0) errorText = `There is no tasks added yet, add some`
+    if(searchText !=='') errorText = `There is no results matching the search "${searchText}"`
+
     if (searchText !== '') taskList=taskList.filter(task => task.getTitle().includes(searchText))
-        return {taskList,handleClickOpen,handleClose,open}
+        return {taskList,handleClickOpen,handleClose,open,errorText}
 }
