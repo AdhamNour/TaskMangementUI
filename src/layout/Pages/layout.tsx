@@ -76,7 +76,10 @@ const Layout: FunctionComponent = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
+            <Box padding={2}>
+
             <Outlet/>
+            </Box>
         </Fragment>
     );
 }

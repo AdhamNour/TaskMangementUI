@@ -1,4 +1,4 @@
-import { Fab, Grid } from "@mui/material";
+import { Fab, Grid, Typography } from "@mui/material";
 import { Fragment, FunctionComponent } from "react";
 import TaskListItem from "../widgets/TaskListItem";
 import { useAppSelector } from "../../../store/hooks";
@@ -25,9 +25,11 @@ const TasksList: FunctionComponent<TasksListProps> = () => {
     })
 
     return (<Fragment>
-        <Grid container spacing={2}>
+        {taskList.length==0?<Typography>There is no Tasks Added yet</Typography>:
+            
+            <Grid container spacing={2}>
             {displayedTasks}
-        </Grid>
+        </Grid>}
         <Fab color="primary" aria-label="add" sx={{ position: 'fixed', bottom: 20, right: 20 }} onClick={() => {
             handleClickOpen();
         }}>

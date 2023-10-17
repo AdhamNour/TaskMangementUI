@@ -9,7 +9,7 @@ interface LogInProps {
 const LogIn: FunctionComponent<LogInProps> = () => {
     const navigate = useNavigate();
 
-    return (<Box display={'flex'} justifyContent={'center'} alignItems={'center'} width={'100vw'} height={'100vh'}>
+    return (<Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
         <Card>
             <Box padding={2}>
                 <Typography>Login</Typography>

@@ -5,16 +5,10 @@ import { TransitionProps } from '@mui/material/transitions';
 import { useAppDispatch } from '../../../store/hooks';
 import { addTask } from '../models/TaskSlice';
 import Task from '../models/Task';
+import { Transition } from './Transition';
 
 
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+
 
 interface AddTaskDialogProps {
     open: boolean;
