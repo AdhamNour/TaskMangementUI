@@ -20,12 +20,15 @@ const initialState: TaskSlice = {
       // Use the PayloadAction type to declare the contents of `action.payload`
       addTask: (state, action: PayloadAction<Task>) => {
         state.tasks=[...state.tasks,action.payload];
+      },
+      deleteTask:(state,action:PayloadAction<Task>)=>{
+        state.tasks = state.tasks.filter(task=>task.getId()!==action.payload.getId());
       }
     }
   })
   
 
-export const {addTask} = tasksSlice.actions
+export const {addTask,deleteTask} = tasksSlice.actions
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 
