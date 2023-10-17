@@ -1,11 +1,12 @@
-import { Box, Card, Typography, Checkbox, IconButton, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Slide } from '@mui/material';
+import { Box, Card, Typography, Checkbox, IconButton, Slide } from '@mui/material';
 import { Fragment, FunctionComponent, ReactElement, Ref, forwardRef, useState } from "react";
 import Task, { TASK_STATE } from "../models/Task";
 import { Delete, Edit } from "@mui/icons-material";
 import { green, red } from "@mui/material/colors";
-import { addTask, deleteTask } from '../models/TaskSlice';
 import { TransitionProps } from '@mui/material/transitions';
 import { useAppDispatch } from '../../../store/hooks';
+import DeleteTaskDialog from './DeleteTaskDialog';
+import EditTaskDialog from './EditTaskDialog';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -23,12 +24,19 @@ interface TaskListItemProps {
 const TaskListItem: FunctionComponent<TaskListItemProps> = ({ task }) => {
     const dispath = useAppDispatch();
     const [deleteTaskDialog, setDeleteTaskDialog] = useState(false)
-
+const [editTaskDialog, setEditTaskDialog] = useState(false)
     const handleClose = () => {
         setDeleteTaskDialog(false);
     };
     const handleOpen = () => {
         setDeleteTaskDialog(true);
+
+    }
+    const handleOpenEditTaskDialog=()=>{
+        setEditTaskDialog(true);
+    }
+    const handleCloseEditTaskDialog=()=>{
+        setEditTaskDialog(false);
 
     }
     const [taskState, setTaskState] = useState<TASK_STATE>(TASK_STATE.NOT_STARTED);
@@ -52,33 +60,15 @@ const TaskListItem: FunctionComponent<TaskListItemProps> = ({ task }) => {
                     <IconButton aria-label="delete" color="error" onClick={handleOpen}>
                         <Delete />
                     </IconButton>
-                    <IconButton aria-label="edit" color="secondary">
+                    <IconButton aria-label="edit" color="secondary" onClick={handleOpenEditTaskDialog}>
                         <Edit />
                     </IconButton>
 
                 </Box>
             </Box>
         </Card>
-        <Dialog
-            open={deleteTaskDialog}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-        >
-            <DialogTitle>{`Deleteing "${task.getTitle()}" task`}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    task "{task.getTitle()}" is going to be deleted, are you sure to continue that action?            </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={() => {
-                    dispath(deleteTask(task))
-                    handleClose();
-                }}>Agree</Button>
-            </DialogActions>
-        </Dialog>
+       <DeleteTaskDialog open={deleteTaskDialog} handleClose={handleClose } task={task} />
+       <EditTaskDialog open={editTaskDialog} handleClose={handleCloseEditTaskDialog } task={task} />
     </Fragment>);
 }
 

@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import Task from "./Task";
 import { RootState } from "../../../store/store";
+import { act } from "react-dom/test-utils";
 
 export interface TaskSlice{
     tasks:Task[]
@@ -23,12 +24,18 @@ const initialState: TaskSlice = {
       },
       deleteTask:(state,action:PayloadAction<Task>)=>{
         state.tasks = state.tasks.filter(task=>task.getId()!==action.payload.getId());
+      },
+      updateTask:(state,action:PayloadAction<Task>)=>{
+        const i = state.tasks.findIndex(task=>task.getId()===action.payload.getId());
+        const newTasks = [...state.tasks];
+        newTasks[i]=action.payload;
+        state.tasks=[...newTasks]
       }
     }
   })
   
 
-export const {addTask,deleteTask} = tasksSlice.actions
+export const {addTask,deleteTask,updateTask} = tasksSlice.actions
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
 

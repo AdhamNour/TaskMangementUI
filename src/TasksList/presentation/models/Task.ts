@@ -21,4 +21,7 @@ export default class Task {
     setState(newState:TASK_STATE){
         this.state=newState;
     }
+    setTitle(newTitle:string){
+        this.title=newTitle;
+    }
 }
